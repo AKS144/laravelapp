@@ -1,4 +1,5 @@
 name: Laravel Deployment
+
 on:
   push:
     branches:
@@ -27,12 +28,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Add SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.AWS_SSH_KEY }}
+
       - name: Deploy to AWS EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.AWS_INSTANCE_IP }} "
-          cd /var/www/html &&
-          git pull &&
-          composer install --no-dev &&
-          php artisan migrate --force &&
-          php artisan optimize
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.AWS_INSTANCE_IP }} "
+            cd /var/www/html/laravelapp &&
+            git pull &&
+            composer install --no-dev &&
+            php artisan migrate --force &&
+            php artisan optimize
           "
