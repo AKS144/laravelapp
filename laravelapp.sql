@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `Price` text,
   `PictureURL` text,
   `LocalPicturePath` text
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `products`
